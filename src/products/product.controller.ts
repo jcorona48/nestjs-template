@@ -8,10 +8,13 @@ import {
   ParseIntPipe,
   ValidationPipe,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, UpdateProductDto, FindProductDto } from './dto';
 import { TransformQueryPipe } from '../common/pipes/transform-query.pipe';
+import { AuthGuard } from '@/auth/guards/auth.guards';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductController {
@@ -27,11 +30,15 @@ export class ProductController {
     return await this.productService.getProductById(id);
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
   @Post()
-  async create(@Body(new ValidationPipe()) createProductDto: CreateProductDto) {
+  async create(@Body(ValidationPipe) createProductDto: CreateProductDto) {
     return await this.productService.createProduct(createProductDto);
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
   @Put(':id')
   async update(
     @Param('id') id: number,

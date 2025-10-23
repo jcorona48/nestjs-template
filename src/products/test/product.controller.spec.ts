@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductController } from '../product.controller';
 import { ProductService } from '../product.service';
 import { UtilsService } from '../../common/utils/utils.service';
+import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
+import { JWT_CONFIG } from '@/config/jwt';
 
 describe('ProductController', () => {
   let controller: ProductController;
@@ -10,6 +12,7 @@ describe('ProductController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductController],
       providers: [ProductService, UtilsService],
+      imports: [JwtModule.register(JWT_CONFIG as JwtModuleOptions)],
     }).compile();
 
     controller = module.get<ProductController>(ProductController);
