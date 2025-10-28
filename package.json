@@ -93,10 +93,15 @@
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"
     ],
-    "coverageDirectory": "./coverage",
+    "coverageDirectory": "./reports/coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     }
-  }
+  },
+  "jestSonar": {
+      "reportPath": "reports",
+      "reportFile": "test-report.xml",
+      "indent": 4
+    }
 }
