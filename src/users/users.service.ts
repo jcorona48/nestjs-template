@@ -1,73 +1,45 @@
+import { HashingService } from '@/common/hashing/hashing.service';
+import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, FindAllUserDto, Exclude } from './dto';
+import { CreateUserDto, Exclude, UpdateUserDto } from './dto';
 import { User } from './interfaces/users.interface';
-import { UtilsService } from '@/common/utils/utils.service';
 
 const users: User[] = [
   {
     id: 1,
     name: 'admin',
     email: 'admin@example.com',
-    password: 'admin123',
+    password:
+      '$argon2id$v=19$m=4096,t=1,p=1$CXpFmapigBeSNxTo58SmEQ$rdDGBn9I+JcmPVk5rvM+a5jWi7htgPp2L1i4FotyjVs',
   },
 ];
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly utilsService: UtilsService) {}
+  constructor(
+    private readonly hashingService: HashingService,
+    private readonly prismaService: PrismaService,
+  ) {}
 
-  async findAll(
-    query?: FindAllUserDto,
-    options?: { withPassword: boolean },
-  ): Promise<Exclude<User, 'password'>[]> {
-    const usersFiltered = this.utilsService.filterByQuery<
-      Omit<User, 'password'>
-    >(
-      options?.withPassword
-        ? users
-        : users.map(({ password, ...rest }) => {
-            void password;
-            return rest;
-          }),
-      query,
-    );
-    return await Promise.resolve(usersFiltered);
-  }
+  async findAll(): Promise<Exclude<User, 'password'>[]> {
+    const usersPrisma = await this.prismaService.user.findMany({
+      omit: {
+        password: true,
+      },
+    });
 
-  async findByEmail(
-    email: string,
-  ): Promise<Omit<User, 'password'> | undefined> {
-    const user = await Promise.resolve(
-      users.find((user) => user.email === email),
-    );
-    if (!user) return undefined;
-    const { password, ...rest } = user;
-    void password;
-    return rest;
-  }
-
-  async findByEmailWithPassword(email: string): Promise<User | undefined> {
-    const user = await Promise.resolve(
-      users.find((user) => user.email === email),
-    );
-    return user;
-  }
-
-  async findByNameWithPassword(name: string): Promise<User | undefined> {
-    const user = await Promise.resolve(
-      users.find((user) => user.name === name),
-    );
-    return user;
+    return await Promise.resolve(usersPrisma);
   }
 
   async findByNameOrEmailWithPassword(
     identifier: string,
-  ): Promise<User | undefined> {
-    const user = await Promise.resolve(
-      users.find(
-        (user) => user.name === identifier || user.email === identifier,
-      ),
-    );
+  ): Promise<User | null> {
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        OR: [{ name: identifier }, { email: identifier }],
+      },
+    });
+
     return user;
   }
 
@@ -80,8 +52,13 @@ export class UsersService {
   }
 
   async create(user: CreateUserDto): Promise<User> {
-    const newUser = { ...user, id: users.length + 1 };
-    users.push(newUser);
+    const newUser = await this.prismaService.user.create({
+      data: {
+        ...user,
+        password: await this.hashingService.hash(user.password),
+      },
+    });
+    console.log('Created user:', newUser);
     return await Promise.resolve(newUser);
   }
 

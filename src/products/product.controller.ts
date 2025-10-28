@@ -1,20 +1,20 @@
+import { AuthGuard } from '@/auth/guards/auth.guards';
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Put,
-  Body,
   Param,
   ParseIntPipe,
-  ValidationPipe,
+  Post,
+  Put,
   Query,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { CreateProductDto, UpdateProductDto, FindProductDto } from './dto';
-import { TransformQueryPipe } from '../common/pipes/transform-query.pipe';
-import { AuthGuard } from '@/auth/guards/auth.guards';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { TransformQueryPipe } from '../common/pipes/transform-query.pipe';
+import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
+import { ProductService } from './product.service';
 
 @Controller('products')
 export class ProductController {

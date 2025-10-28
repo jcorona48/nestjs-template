@@ -15,7 +15,10 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto';
 
 @ApiTags('Authorization')
-@Controller('auth')
+@Controller({
+  version: '1',
+  path: 'auth',
+})
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

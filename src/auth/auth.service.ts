@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { User } from '@/users/interfaces/users.interface';
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { HashingService } from '@/common/hashing/hashing.service';
 
 export type AuthInput = {
   username: string;
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private hashingService: HashingService,
   ) {}
 
   async validateUser(input: AuthInput): Promise<User | null> {
@@ -21,7 +23,14 @@ export class AuthService {
       input.username,
     );
 
-    return user && user.password === input.password ? user : null;
+    if (!user) return null;
+
+    const matchPassword = await this.hashingService.verify(
+      user?.password,
+      input.password,
+    );
+
+    return user && matchPassword ? user : null;
   }
 
   async authenticate(input: AuthInput): Promise<{

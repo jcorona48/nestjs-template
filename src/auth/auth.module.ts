@@ -4,10 +4,15 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '@/users/users.module';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { JWT_CONFIG } from '@/config/jwt';
+import { HashingModule } from '@/common/hashing/hashing.module';
 
 @Module({
   providers: [AuthService],
   controllers: [AuthController],
-  imports: [UsersModule, JwtModule.register(JWT_CONFIG as JwtModuleOptions)],
+  imports: [
+    UsersModule,
+    JwtModule.register(JWT_CONFIG as JwtModuleOptions),
+    HashingModule,
+  ],
 })
 export class AuthModule {}

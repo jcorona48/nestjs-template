@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto, UpdateProductDto, FindProductDto } from './dto';
-import type { Product } from './interface/product.interface';
 import { UtilsService } from '../common/utils/utils.service';
+import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
+import type { Product } from './interface/product.interface';
 
 const products: Product[] = [
   {
