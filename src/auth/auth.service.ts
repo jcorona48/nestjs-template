@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { User } from '@/users/interfaces/users.interface';
-import { UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { HashingService } from '@/common/hashing/hashing.service';
+import { User } from '@/users/interfaces/users.interface';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 export type AuthInput = {
   username: string;
@@ -13,9 +12,9 @@ export type AuthInput = {
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-    private hashingService: HashingService,
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+    private readonly hashingService: HashingService,
   ) {}
 
   async validateUser(input: AuthInput): Promise<User | null> {

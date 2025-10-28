@@ -9,7 +9,7 @@ export class TransformQueryPipe implements PipeTransform {
     const parsed = qs.parse(queryString, {
       decoder: (str: string): string | number | boolean => {
         const num = Number(str);
-        if (!isNaN(num) && str.trim() !== '') {
+        if (!Number.isNaN(num) && str.trim() !== '') {
           return num;
         }
         const bool = str.toLowerCase();

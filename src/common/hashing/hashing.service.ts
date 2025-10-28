@@ -9,12 +9,13 @@ export class HashingService {
 
   constructor(private readonly hashingConfig: HashingConfig) {
     this.hashingOptions = {
-      type: this.hashingConfig.type,
-      memoryCost: this.hashingConfig.memoryCost,
-      timeCost: this.hashingConfig.timeCost,
-      parallelism: this.hashingConfig.parallelism,
+      type: this.hashingConfig.type || argon2.argon2id,
+      memoryCost: this.hashingConfig.memoryCost || 2 ** 16,
+      timeCost: this.hashingConfig.timeCost || 5,
+      parallelism: this.hashingConfig.parallelism || 1,
     };
 
+    console.log('Hashing options:', this.hashingOptions);
     this.isDevelop = process.env['NODE_ENV'] !== 'production';
   }
 

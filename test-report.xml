@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/home/jcorona/projects/testing-nest/src/common/utils/utils.service.spec.ts">
+    <testCase name="UtilsService should be defined" duration="34"/>
+    <testCase name="filterByQuery should return all items if no query is provided" duration="3"/>
+    <testCase name="filterByQuery should filter items based on query object" duration="4"/>
+    <testCase name="filterByQuery should filter items based on string inclusion" duration="2"/>
+    <testCase name="filterByQuery should filter items based on array inclusion" duration="2"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/products/test/product.controller.spec.ts">
+    <testCase name="ProductController should be defined" duration="53"/>
+    <testCase name="ProductController should insert a product" duration="126"/>
+    <testCase name="ProductController should retrieve all products" duration="21"/>
+    <testCase name="ProductController should retrieve a product by id" duration="47"/>
+    <testCase name="ProductController should update a product" duration="17"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/products/test/product.service.spec.ts">
+    <testCase name="ProductService should be defined" duration="16"/>
+    <testCase name="ProductService should insert a product" duration="6"/>
+    <testCase name="ProductService should retrieve all products" duration="7"/>
+    <testCase name="ProductService should retrieve a product by id" duration="7"/>
+    <testCase name="ProductService should update a product" duration="5"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/users/test/users.service.spec.ts">
+    <testCase name="UsersService should be defined" duration="100"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/auth/test/auth.controller.spec.ts">
+    <testCase name="AuthController should be defined" duration="256"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/test/app.controller.spec.ts">
+    <testCase name="AppController should be defined" duration="57"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/test/app.module.spec.ts">
+    <testCase name="AppModule should be defined" duration="236"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/auth/test/auth.service.spec.ts">
+    <testCase name="AuthService should be defined" duration="1158"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/common/pipes/transform-query.pipe.spec.ts">
+    <testCase name="TransformQueryPipe should be defined" duration="3"/>
+    <testCase name="TransformQueryPipe should transform complex query objects" duration="11"/>
+    <testCase name="TransformQueryPipe should return the same value for non-query metadata" duration="2"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/common/hashing/hashing.service.spec.ts">
+    <testCase name="HashingService should be defined" duration="128"/>
+    <testCase name="HashingService should hash and verify a value correctly" duration="4728"/>
+  </file>
+  <file path="/home/jcorona/projects/testing-nest/src/users/test/users.controller.spec.ts">
+    <testCase name="UsersController should be defined" duration="142"/>
+    <testCase name="UsersController should create a user" duration="3950"/>
+    <testCase name="UsersController should get all users without password" duration="14"/>
+    <testCase name="UsersController should get user by id without password" duration="497"/>
+  </file>
+</testExecutions>
