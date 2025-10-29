@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy, JwtConfig],
-  exports: [AuthService, JwtConfig],
+  exports: [AuthService],
   controllers: [AuthController],
   imports: [
     UsersModule,

@@ -17,6 +17,9 @@ export class AuthGuard implements CanActivate {
         .getRequest();
       const authorization = request.headers['authorization'] as string;
       const token = authorization?.split(' ')[1];
+      if (!token) {
+        throw new UnauthorizedException();
+      }
       const payload: {
         username: string;
         sub: string;

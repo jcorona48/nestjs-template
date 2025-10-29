@@ -15,7 +15,6 @@ export class HashingService {
       parallelism: this.hashingConfig.parallelism || 1,
     };
 
-    console.log('Hashing options:', this.hashingOptions);
     this.isDevelop = process.env['NODE_ENV'] !== 'production';
   }
 

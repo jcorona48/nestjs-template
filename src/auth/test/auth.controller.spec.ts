@@ -26,13 +26,13 @@ describe('AuthController', () => {
         PrismaService,
         LocalStrategy,
         JwtStrategy,
+        HashingConfig,
       ],
       imports: [
         JwtModule.register(JWT_CONFIG as JwtModuleOptions),
         PassportModule,
         HashingModule,
         UsersModule,
-        HashingConfig,
       ],
     }).compile();
 
