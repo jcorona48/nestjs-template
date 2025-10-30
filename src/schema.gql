@@ -14,8 +14,17 @@ type LoginResponse {
   user: User!
 }
 
+type Product {
+  id: Float!
+  name: String!
+  description: String!
+  price: Float!
+}
+
 type Query {
   hello: String!
+  products: [Product!]!
+  product(id: Int!): Product
 }
 
 type Mutation {

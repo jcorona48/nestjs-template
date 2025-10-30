@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { TransformQueryPipe } from '../common/pipes/transform-query.pipe';
-import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
+import { CreateProductDto, FindProductsDto, UpdateProductDto } from './dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -21,7 +21,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  async findAll(@Query(TransformQueryPipe) query?: FindProductDto) {
+  async findAll(@Query(TransformQueryPipe) query?: FindProductsDto) {
     return await this.productService.getAllProducts(query);
   }
 

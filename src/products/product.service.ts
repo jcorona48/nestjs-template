@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UtilsService } from '../common/utils/utils.service';
-import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
+import { CreateProductDto, FindProductsDto, UpdateProductDto } from './dto';
 import type { Product } from './interface/product.interface';
 
 const products: Product[] = [
@@ -22,7 +22,7 @@ const products: Product[] = [
 export class ProductService {
   constructor(private readonly utilsService: UtilsService) {}
 
-  async getAllProducts(query?: FindProductDto) {
+  async getAllProducts(query?: FindProductsDto) {
     const filteredProducts = this.utilsService.filterByQuery(products, query);
     return new Promise<Product[]>((resolve) => {
       resolve(filteredProducts);
