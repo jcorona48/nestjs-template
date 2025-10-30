@@ -1,6 +1,5 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { CreateProductDto } from './create-product.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class FindProductDto extends PartialType(CreateProductDto) {
   @ApiPropertyOptional({

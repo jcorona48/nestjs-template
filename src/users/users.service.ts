@@ -44,11 +44,14 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<Omit<User, 'password'> | undefined> {
-    const user = await Promise.resolve(users.find((user) => user.id === id));
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+      omit: {
+        password: true,
+      },
+    });
     if (!user) return undefined;
-    const { password, ...rest } = user;
-    void password;
-    return rest;
+    return user;
   }
 
   async create(user: CreateUserDto): Promise<User> {

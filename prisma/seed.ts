@@ -8,7 +8,7 @@ async function main() {
       email: 'admin@example.com',
       name: 'admin',
       password:
-        '$argon2id$v=19$m=4096,t=1,p=1$CXpFmapigBeSNxTo58SmEQ$rdDGBn9I+JcmPVk5rvM+a5jWi7htgPp2L1i4FotyjVs',
+        '$argon2id$v=19$m=4096,t=1,p=1$CXpFmapigBeSNxTo58SmEQ$rdDGBn9I+JcmPVk5rvM+a5jWi7htgPp2L1i4FotyjVs', // sensitive
     },
     update: {},
     where: { email: 'admin@example.com' },
