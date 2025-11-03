@@ -29,7 +29,7 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
-  @Post()
+  @Post('register')
   @UseGuards(AuthGuard)
   @ApiBearerAuth('authorization')
   createUser(@Body(ValidationPipe) createUserDto: CreateUserDto) {
