@@ -1,15 +1,19 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
-import type {
-  AuthenticationResponseJSON,
-  RegistrationResponseJSON,
-} from 'node_modules/@simplewebauthn/server/esm/types';
-import { WebauthnService } from './webauthn.service';
-import { User } from '@/users/interfaces/users.interface';
-import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
-import { UseGuards } from '@nestjs/common';
+import { User } from '@/users/interfaces/users.interface';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { Request as ExpressRequest } from 'express';
-
+import { AuthVerifyDto } from './dto/auth.dto';
+import { RegisterVerifyDto } from './dto/register.dto';
+import { WebauthnService } from './webauthn.service';
 @Controller({
   path: 'auth/webauthn',
   version: '1',
@@ -17,32 +21,37 @@ import { Request as ExpressRequest } from 'express';
 export class WebauthnController {
   constructor(private readonly webauthnService: WebauthnService) {}
 
-  @Post('register/start')
-  async registerStart(@Body() body: { userId: number; userName: string }) {
-    return this.webauthnService.generateRegistrationOptions(
-      body.userId,
-      body.userName,
-    );
+  @ApiBearerAuth('authorization')
+  @UseGuards(JwtAuthGuard)
+  @Get('register/start')
+  async registerStart(@Request() req: ExpressRequest & { user: User }) {
+    const { id, name } = req.user;
+    return this.webauthnService.generateRegistrationOptions(id, name);
   }
 
+  @ApiBearerAuth('authorization')
   @Post('register/verify')
+  @UseGuards(JwtAuthGuard)
   async registerVerify(
-    @Body() body: { userId: number; response: RegistrationResponseJSON },
+    @Request() req: ExpressRequest & { user: User },
+    @Body() body: RegisterVerifyDto,
   ) {
-    return this.webauthnService.verifyRegistration(body.userId, body.response);
+    return this.webauthnService.verifyRegistration(req.user.id, body.response);
   }
 
-  @Post('authenticate/start')
-  async authenticateStart(@Body() body?: { identifier?: number | string }) {
-    return this.webauthnService.generateAuthenticationOptions(body?.identifier);
+  @Get('authenticate/start/:identifier')
+  @ApiParam({ name: 'identifier', required: false, type: String })
+  async authenticateStart(@Param('identifier') identifier: string) {
+    const parsed = +identifier;
+    return this.webauthnService.generateAuthenticationOptions(
+      !isNaN(parsed) ? parsed : identifier,
+    );
   }
 
   @Post('authenticate/verify')
   async authenticateVerify(
     @Body()
-    body: {
-      response: AuthenticationResponseJSON;
-    },
+    body: AuthVerifyDto,
   ) {
     const credentialID = body?.response?.id;
     return this.webauthnService.verifyAuthentication(

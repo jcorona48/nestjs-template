@@ -43,6 +43,7 @@ export class WebauthnService {
       rpID: this.rpID,
       userID: new TextEncoder().encode(userId.toString()),
       userName: userName,
+      userDisplayName: userName,
       attestationType: 'none',
       excludeCredentials: userAuthenticators.map((auth) => ({
         id: auth.id.toString('base64url'),
