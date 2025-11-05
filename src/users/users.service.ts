@@ -61,7 +61,6 @@ export class UsersService {
         password: await this.hashingService.hash(user.password),
       },
     });
-    console.log('Created user:', newUser);
     return await Promise.resolve(newUser);
   }
 

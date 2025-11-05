@@ -1,3 +1,4 @@
+import { WEBAUTHN_CONFIG } from '@/config/webauthn';
 import { PrismaService } from '@/prisma.service';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
@@ -24,11 +25,9 @@ type AuthenticatorCredential = {
 
 @Injectable()
 export class WebauthnService {
-  private rpName = 'My Awesome App';
-  private rpID =
-    'webauthn-git-feature-webauthn-joan-coronas-projects.vercel.app';
-  private origin =
-    'https://webauthn-git-feature-webauthn-joan-coronas-projects.vercel.app';
+  private rpName = WEBAUTHN_CONFIG.rpName;
+  private rpID = WEBAUTHN_CONFIG.rpID;
+  private origin = WEBAUTHN_CONFIG.origin;
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -242,8 +241,6 @@ export class WebauthnService {
   }
 
   private async getChallenge(userId: number) {
-    console.log('Retrieving challenge for userId:', userId);
-    console.log('Current challenges map:', challenges);
     const challenge = await this.cacheManager.wrap<string>(
       `webauthn_challenge_${userId}`,
       () => {
@@ -255,9 +252,7 @@ export class WebauthnService {
 
   async availableAuthMethods(identifier: number | string) {
     const methods = ['password'];
-    console.log('Checking available auth methods for identifier:', identifier);
     const authenticators = await this.getUserAuthenticators(identifier);
-    console.log('Authenticators:', authenticators);
     if (authenticators.length > 0) methods.push('webauthn');
     return methods;
   }
