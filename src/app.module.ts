@@ -7,6 +7,7 @@ import { HashingModule } from './common/hashing/hashing.module';
 import { UtilsModule } from './common/utils/utils.module';
 import { ProductModule } from './products/product.module';
 import { UsersModule } from './users/users.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -16,6 +17,9 @@ import { UsersModule } from './users/users.module';
     UtilsModule,
     HashingModule,
     ConfigifyModule.forRootAsync(),
+    CacheModule.register({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

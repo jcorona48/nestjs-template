@@ -1,0 +1,18 @@
+model Authenticator {
+  id                   String   @id @default(cuid())
+  credentialID         Bytes   @unique
+  credentialPublicKey  Bytes
+  counter              BigInt   @default(0)
+  transports           String
+  deviceName           String?
+  aaguid               String?
+  credentialBackedUp   Boolean  @default(false)
+  credentialDeviceType String?
+  createdAt            DateTime @default(now())
+  lastUsedAt           DateTime @default(now())
+  userId               Int
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@map("authenticators")
+}
