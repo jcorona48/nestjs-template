@@ -1,4 +1,5 @@
-import { AuthGuard } from '@/auth/guards/auth.guard';
+import { AuthGuard } from '@/core/auth/guards/auth.guard';
+import { User } from '@/core/users/interfaces/users.interface';
 import {
   Body,
   Controller,
@@ -14,9 +15,8 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { Request as ExpressRequest } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto';
-import { LocalAuthGuard } from './guards/passport.guard';
-import { User } from '@/users/interfaces/users.interface';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { LocalAuthGuard } from './guards/passport.guard';
 
 @ApiTags('Authorization')
 @Controller({

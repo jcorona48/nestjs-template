@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductService } from '../product.service';
 import { UtilsService } from '../../common/utils/utils.service';
 import { Product } from '../interface/product.interface';
+import { ProductService } from '../product.service';
 
 describe('ProductService', () => {
   let service: ProductService;

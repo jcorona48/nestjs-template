@@ -1,5 +1,5 @@
-import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
-import { User } from '@/users/interfaces/users.interface';
+import { JwtAuthGuard } from '@/core/auth/guards/jwt.guard';
+import { User } from '@/core/users/interfaces/users.interface';
 import {
   Body,
   Controller,

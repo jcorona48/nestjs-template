@@ -1,4 +1,4 @@
-import { AuthGuard } from '@/auth/guards/auth.guard';
+import { AuthGuard } from '@/core/auth/guards/auth.guard';
 import {
   Body,
   Controller,
@@ -29,7 +29,7 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
-  @Post('register')
+  @Post()
   @UseGuards(AuthGuard)
   @ApiBearerAuth('authorization')
   createUser(@Body(ValidationPipe) createUserDto: CreateUserDto) {

@@ -1,10 +1,10 @@
-import { HashingModule } from '@/common/hashing/hashing.module';
-import { UtilsService } from '@/common/utils/utils.service';
 import { HashingConfig } from '@/config/hashing';
 import { JWT_CONFIG } from '@/config/jwt';
+import { HashingModule } from '@/core/common/hashing/hashing.module';
+import { UtilsService } from '@/core/common/utils/utils.service';
+import { UsersModule } from '@/core/users/users.module';
+import { UsersService } from '@/core/users/users.service';
 import { PrismaService } from '@/prisma.service';
-import { UsersModule } from '@/users/users.module';
-import { UsersService } from '@/users/users.service';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';

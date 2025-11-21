@@ -1,6 +1,6 @@
-import { HashingModule } from '@/common/hashing/hashing.module';
-import { UtilsService } from '@/common/utils/utils.service';
 import { JWT_CONFIG } from '@/config/jwt';
+import { HashingModule } from '@/core/common/hashing/hashing.module';
+import { UtilsService } from '@/core/common/utils/utils.service';
 import { PrismaService } from '@/prisma.service';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';

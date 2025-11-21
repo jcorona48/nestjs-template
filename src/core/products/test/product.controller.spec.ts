@@ -1,9 +1,9 @@
+import { JWT_CONFIG } from '@/config/jwt';
+import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UtilsService } from '../../common/utils/utils.service';
 import { ProductController } from '../product.controller';
 import { ProductService } from '../product.service';
-import { UtilsService } from '../../common/utils/utils.service';
-import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
-import { JWT_CONFIG } from '@/config/jwt';
 
 describe('ProductController', () => {
   let controller: ProductController;

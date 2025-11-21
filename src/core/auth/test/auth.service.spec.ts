@@ -1,9 +1,9 @@
-import { JwtStrategy } from '@/auth/strategies/jwt.strategy';
-import { LocalStrategy } from '@/auth/strategies/local.strategy';
-import { HashingModule } from '@/common/hashing/hashing.module';
 import { JWT_CONFIG } from '@/config/jwt';
+import { JwtStrategy } from '@/core/auth/strategies/jwt.strategy';
+import { LocalStrategy } from '@/core/auth/strategies/local.strategy';
+import { HashingModule } from '@/core/common/hashing/hashing.module';
+import { UsersModule } from '@/core/users/users.module';
 import { PrismaService } from '@/prisma.service';
-import { UsersModule } from '@/users/users.module';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';

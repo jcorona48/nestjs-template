@@ -1,4 +1,4 @@
-import { HashingService } from '@/common/hashing/hashing.service';
+import { HashingService } from '@/core/common/hashing/hashing.service';
 import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto, Exclude, UpdateUserDto } from './dto';

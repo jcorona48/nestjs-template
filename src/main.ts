@@ -7,6 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useLogger(new Logger());
+  app.enableVersioning({
+    type: VersioningType.URI,
+    prefix: 'v',
+    defaultVersion: '1',
+  });
   const config = new DocumentBuilder()
     .setTitle('Testing API')
     .setDescription('API for testing NestJS application')
@@ -20,11 +25,6 @@ async function bootstrap() {
       'authorization',
     )
     .build();
-  app.enableVersioning({
-    type: VersioningType.URI,
-    prefix: 'v',
-    defaultVersion: '1',
-  });
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   await app.listen(process.env.PORT ?? 3000);

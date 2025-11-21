@@ -1,5 +1,5 @@
-import { HashingService } from '@/common/hashing/hashing.service';
-import { User } from '@/users/interfaces/users.interface';
+import { HashingService } from '@/core/common/hashing/hashing.service';
+import { User } from '@/core/users/interfaces/users.interface';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
