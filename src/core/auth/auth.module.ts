@@ -1,9 +1,10 @@
-import { JWT_CONFIG, JwtConfig } from '@/config/jwt';
+import { BankinglyModule } from '@/bankingly/bankingly.module';
 import { JwtStrategy } from '@/core/auth/strategies/jwt.strategy';
 import { LocalStrategy } from '@/core/auth/strategies/local.strategy';
 import { HashingModule } from '@/core/common/hashing/hashing.module';
+import { JWT_CONFIG, JwtConfig } from '@/core/config/jwt';
+import { PrismaService } from '@/core/prisma/prisma.service';
 import { UsersModule } from '@/core/users/users.module';
-import { PrismaService } from '@/prisma.service';
 import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -26,6 +27,7 @@ import { WebauthnModule } from './webauthn/webauthn.module';
     JwtModule.register(JWT_CONFIG as JwtModuleOptions),
     HashingModule,
     PassportModule,
+    BankinglyModule,
     forwardRef(() => WebauthnModule),
   ],
 })

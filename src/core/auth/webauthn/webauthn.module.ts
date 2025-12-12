@@ -1,8 +1,8 @@
+import { PrismaService } from '@/core/prisma/prisma.service';
 import { Module, forwardRef } from '@nestjs/common';
-import { WebauthnService } from './webauthn.service';
-import { WebauthnController } from './webauthn.controller';
-import { PrismaService } from '@/prisma.service';
 import { AuthModule } from '../auth.module';
+import { WebauthnController } from './webauthn.controller';
+import { WebauthnService } from './webauthn.service';
 
 @Module({
   controllers: [WebauthnController],

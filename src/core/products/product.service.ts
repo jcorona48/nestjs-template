@@ -1,5 +1,5 @@
+import { UtilsService } from '@/core/common/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { UtilsService } from '../common/utils/utils.service';
 import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
 import type { Product } from './interface/product.interface';
 

@@ -1,5 +1,5 @@
 import { HashingService } from '@/core/common/hashing/hashing.service';
-import { PrismaService } from '@/prisma.service';
+import { PrismaService } from '@/core/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto, Exclude, UpdateUserDto } from './dto';
 import { User } from './interfaces/users.interface';
@@ -72,13 +72,42 @@ export class UsersService {
     return await Promise.resolve();
   }
 
-  async update(
-    id: number,
-    updatedUser: UpdateUserDto,
-  ): Promise<User | undefined> {
-    const user = users.find((user) => user.id === id);
-    if (!user) return await Promise.resolve(undefined);
-    Object.assign(user, updatedUser);
+  async update({
+    id,
+    updatedUser,
+  }: {
+    id: number;
+    updatedUser: UpdateUserDto;
+  }): Promise<User> {
+    const user = await this.prismaService.user.update({
+      where: { id },
+      data: {
+        ...updatedUser,
+        password: updatedUser.password
+          ? await this.hashingService.hash(updatedUser.password)
+          : undefined,
+      },
+    });
     return await Promise.resolve(user);
+  }
+
+  async createOrUpdateFromBankingly({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<User> {
+    const registeredUser = await this.prismaService.user.findUnique({
+      where: { email },
+    });
+    if (registeredUser) {
+      return this.update({
+        id: registeredUser.id,
+        updatedUser: { email, password },
+      });
+    } else {
+      return this.create({ email, password, name: email });
+    }
   }
 }

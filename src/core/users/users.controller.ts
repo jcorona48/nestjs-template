@@ -43,7 +43,10 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return this.usersService.update({
+      id,
+      updatedUser: updateUserDto,
+    });
   }
 
   @Delete(':id')

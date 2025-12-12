@@ -1,14 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
-import { DB_CONFIG } from './config/db';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     const adapter = new PrismaLibSQL({
-      url: DB_CONFIG.url,
-      authToken: DB_CONFIG.authToken,
+      url: configService.getOrThrow<string>('db.url'),
+      authToken: configService.getOrThrow<string>('db.authToken'),
     });
 
     super({ adapter });

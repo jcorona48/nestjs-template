@@ -1,5 +1,5 @@
-import { JWT_CONFIG } from '@/config/jwt';
-import { PrismaService } from '@/prisma.service';
+import { JWT_CONFIG } from '@/core/config/jwt';
+import { PrismaService } from '@/core/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';

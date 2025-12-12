@@ -12,6 +12,17 @@ export default function configuration() {
         expiresIn: process.env.JWT_EXPIRES_IN || '1d',
       },
     },
+    bankingly: {
+      apiUrl: process.env.BANKINGLY_API_URL || 'https://api.bankingly.com',
+      username: process.env.BANKINGLY_USERNAME || 'default_username',
+      password: process.env.BANKINGLY_PASSWORD || 'default_password',
+      timeout: Number.parseInt(process.env.BANKINGLY_TIMEOUT || '5000'),
+      maxRedirects: Number.parseInt(process.env.BANKINGLY_MAX_REDIRECTS || '5'),
+    },
+    db: {
+      url: process.env.TURSO_DATABASE_URL || 'libsql://default-database-url',
+      authToken: process.env.TURSO_AUTH_TOKEN || 'default_auth_token',
+    },
   };
 }
 

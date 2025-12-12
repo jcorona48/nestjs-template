@@ -1,5 +1,5 @@
-import { WEBAUTHN_CONFIG } from '@/config/webauthn';
-import { PrismaService } from '@/prisma.service';
+import { WEBAUTHN_CONFIG } from '@/core/config/webauthn';
+import { PrismaService } from '@/core/prisma/prisma.service';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import {

@@ -1,6 +1,6 @@
+import { HashingConfig } from '@/core/config/hashing';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HashingService } from './hashing.service';
-import { HashingConfig } from '@/config/hashing';
 
 describe('HashingService', () => {
   let service: HashingService;

@@ -1,8 +1,9 @@
+import { AuthService as BankinglyAuthService } from '@/bankingly/auth/auth.service';
 import { HashingService } from '@/core/common/hashing/hashing.service';
 import { User } from '@/core/users/interfaces/users.interface';
+import { UsersService } from '@/core/users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 
 export type AuthInput = {
   username: string;
@@ -15,12 +16,16 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly hashingService: HashingService,
+    private readonly bankinglyAuthService: BankinglyAuthService,
   ) {}
 
-  async validateUser(input: AuthInput): Promise<User | null> {
-    const user = await this.usersService.findByNameOrEmailWithPassword(
-      input.username,
-    );
+  async validateUser(
+    input: AuthInput,
+    userBankingly?: User,
+  ): Promise<User | null> {
+    const user =
+      userBankingly ||
+      (await this.usersService.findByNameOrEmailWithPassword(input.username));
 
     if (!user) return null;
 
@@ -32,14 +37,36 @@ export class AuthService {
     return user && matchPassword ? user : null;
   }
 
+  async validateBankinglyUser(input: AuthInput) {
+    const bankinglyResponse = await this.bankinglyAuthService.login({
+      userName: input.username,
+      password: input.password,
+    });
+
+    if (!bankinglyResponse || !bankinglyResponse.userAccessToken) return null;
+
+    const userByInput = await this.usersService.createOrUpdateFromBankingly({
+      email: input.username,
+      password: input.password,
+    });
+    return { ...bankinglyResponse, user: userByInput };
+  }
+
   async authenticate(input: AuthInput): Promise<{
     user: User;
     token: string;
+    bankingly: any;
   }> {
-    const user = await this.validateUser(input);
+    const bankinglyUser = await this.validateBankinglyUser(input);
+    if (!bankinglyUser) throw new UnauthorizedException();
+
+    const user = await this.validateUser(input, bankinglyUser.user);
     if (!user) throw new UnauthorizedException();
 
-    return this.signIn(user);
+    return {
+      ...(await this.signIn(user)),
+      bankingly: bankinglyUser,
+    };
   }
 
   async signIn(user: User): Promise<{ token: string; user: User }> {

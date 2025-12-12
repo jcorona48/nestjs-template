@@ -1,4 +1,5 @@
 import { AuthGuard } from '@/core/auth/guards/auth.guard';
+import { TransformQueryPipe } from '@/core/common/pipes/transform-query.pipe';
 import {
   Body,
   Controller,
@@ -12,7 +13,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { TransformQueryPipe } from '../common/pipes/transform-query.pipe';
 import { CreateProductDto, FindProductDto, UpdateProductDto } from './dto';
 import { ProductService } from './product.service';
 

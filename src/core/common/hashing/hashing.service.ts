@@ -1,4 +1,4 @@
-import { HashingConfig } from '@/config/hashing';
+import { HashingConfig } from '@/core/config/hashing';
 import { Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 

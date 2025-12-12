@@ -1,4 +1,4 @@
-import { JWT_CONFIG } from '@/config/jwt';
+import { JWT_CONFIG } from '@/core/config/jwt';
 import { Module } from '@nestjs/common';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { UtilsModule } from '../common/utils/utils.module';
